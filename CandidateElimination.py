@@ -1,36 +1,29 @@
-import pandas as pd
-import numpy as np
-
-# to read the data in the csv file
-data = pd.read_csv("C:/Users/rs6134/Downloads/data5.csv")
-print(data, "n")
-
-# making an array of all the attributes
-d = np.array(data)[:, :-1]
-print("n The attributes are: ", d)
-
-# segragating the target that has positive and negative examples
-target = np.array(data)[:, -1]
-print("n The target is: ", target)
-
-def candidateElimination(c,t):
-    for i,val in enumerate(t):
-        if val == "Yes":
-            specific_hyp = c[i]
-            break
-    print("Specific hypothesis\n",specific_hyp)
-
-    for i,val in enumerate(c):
-        if t[i] == 'Yes':
-            test_array = c[i]
-            for j in range(len(specific_hyp)):
-                if val[j] != specific_hyp[j]:
-                    specific_hyp[j] = '?'
-                else:
-                    pass
-
-    print(specific_hyp)
-
-candidateElimination(d,target)
-
-
+import csv
+with open("C:/Users/rs6134/Downloads/MLDATA/Data.csv") as f:
+    csv_file=csv.reader(f)
+    data=list(csv_file)
+    s=data[1][:-1] #1st record is taken as specific hypothesis
+    g=[['?' for i in range(len(s))] for j in range(len(s))] #? is put for all the records
+for i in data:
+    if i[-1]=="Yes": # if target attribute is yes, then it should match specific hypothesis
+        for j in range(len(s)):
+            if i[j]!=s[j]: # if record doesn't match specific hypothesis, put ? in specific columns
+                s[j]='?'
+            g[j][j]='?'
+    elif i[-1]=="No": # if target attribute is no, then specific hypothesis should not match
+        for j in range(len(s)):
+            if i[j]!=s[j]:
+                g[j][j]=s[j]
+            else:
+                g[j][j]="?"
+    print("\nSteps of Candidate Elimination Algorithm",data.index(i)+1)
+    print(s)
+    print(g)
+gh=[]
+for i in g:
+    for j in i:
+        if j!='?':
+            gh.append(i)
+    break
+print("\nFinal specific hypothesis:\n",s)
+print("\nFinal general hypothesis:\n",gh)
