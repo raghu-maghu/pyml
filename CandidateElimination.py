@@ -9,7 +9,7 @@ for i in data:
         for j in range(len(s)):
             if i[j]!=s[j]: # if record doesn't match specific hypothesis, put ? in specific columns
                 s[j]='?'
-            g[j][j]='?'
+                g[j][j]='?'
     elif i[-1]=="No": # if target attribute is no, then specific hypothesis should not match
         for j in range(len(s)):
             if i[j]!=s[j]:
