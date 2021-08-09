@@ -117,6 +117,6 @@ test_X_pca = pca.transform(test_X)
 var_exp = pca.explained_variance_ratio_.cumsum()
 var_exp = var_exp * 100
 plt.bar(range(no_features), var_exp);
-plt.title(x)
+#plt.title("PCA")
 plt.title('Explained Variance Ratio Vs Number of Features (PCA)')
 plt.show()
